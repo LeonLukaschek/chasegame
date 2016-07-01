@@ -11,7 +11,7 @@ public class RoadCollisonChecker : MonoBehaviour {
 
 	public GameObject colliderHelper;
 
-	public int counter;
+	public int counter, counter_grass;
 
 	void Awake () {
 		counter = 0;
@@ -21,6 +21,10 @@ public class RoadCollisonChecker : MonoBehaviour {
 		if (other.gameObject.tag == "Street") {
 			counter++;
 		}
+
+		if (other.gameObject.tag == "Grass") {
+			counter_grass++;
+		}
 	}
 
 	void OnTriggerExit(Collider other){
@@ -28,6 +32,13 @@ public class RoadCollisonChecker : MonoBehaviour {
 			counter--;
 		}
 
+		if (other.gameObject.tag == "Grass") {
+			counter_grass--;
+		}
+	}
+
+	public bool shouldSpawnGrass(){
+		return counter_grass <= 0 ? true : false;
 	}
 
 	public bool shouldSpawnObjects(){

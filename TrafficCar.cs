@@ -12,7 +12,7 @@ public class TrafficCar : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		transform.Translate(Vector3.forward * Time.deltaTime * speed, Space.World);
+		transform.Translate(Vector3.forward * Time.deltaTime * speed * (-1), Space.World);
 
 	}
 }
