@@ -13,10 +13,9 @@ public class GameManager : MonoBehaviour {
 	[Header("Spawn settings")]
 	public currentArea cArea;
 	public float timeBetweenAreaChanges = 5f;
-
+	public float carSpeed = 2;
 	public float timeBetweenCarSpawnsMax = 10f;
 	public float timeBetweenCarSpawnsMin = 3f;
-	public int highwayGrassBlocks, forestGrassBlocks, connectorGrassBlocks;
 	public List<GameObject> roadPrefabs = new List<GameObject>();
 	[Space(10)]
 	[Header("References to other objects")]
@@ -27,7 +26,6 @@ public class GameManager : MonoBehaviour {
 
 	public enum currentArea
 	{
-		CITY,
 		FOREST,
 		HIGHWAY,
 		CONNECTOR
@@ -36,7 +34,7 @@ public class GameManager : MonoBehaviour {
 
 	private int spawnedStreetsCounter = 1;
 	private int treeSpawns = 1, grassSpawns = 1;
-	private float timeBetweenCarSpawns = 5f;
+	private float timeBetweenCarSpawns = 3f, spawnGrassZ = 0, lastGrassSpawnZ = 12;
 
 	// Use this for initialization
 	void Start () {
@@ -60,36 +58,34 @@ public class GameManager : MonoBehaviour {
 			treeSpawns = 1;
 			grassSpawns = 2;
 
-
-			//Spawnin the right amount of grassblocks
-			oSpawner.SpawnGrassBlock (connectorGrassBlocks);
 			break;
 		case currentArea.FOREST:
-			treeSpawns = 5;
-			grassSpawns = 3;
-
-
-			oSpawner.SpawnGrassBlock (forestGrassBlocks);
+			treeSpawns = 4;
+			grassSpawns = 2;
+	
 			break;
 		case currentArea.HIGHWAY:
 			treeSpawns = 0;
-			grassSpawns = 5;
+			grassSpawns = 4;
 
 
-			oSpawner.SpawnGrassBlock (highwayGrassBlocks);
 			break;
-		case currentArea.CITY:
-			treeSpawns = 0;
-			grassSpawns = 0;
-
-
-			oSpawner.SpawnGrassBlock (highwayGrassBlocks);
-			break;
+//		case currentArea.CITY:
+//			treeSpawns = 0;
+//			grassSpawns = 0;
+//
+//
+//			oSpawner.SpawnGrassBlock (highwayGrassBlocks);
+//			break;
 		default:
 			treeSpawns = 0;
 			grassSpawns = 0;
 			Debug.Log ("Default area used");
 			break;
+		}
+
+		if (rcc.shouldSpawnGrass ()) {
+			oSpawner.SpawnGrassBlock ();
 		}
 
 		//Calling the spawn methods form Objectspawner
@@ -118,7 +114,9 @@ public class GameManager : MonoBehaviour {
 			yield return new WaitForSeconds (timeBetweenCarSpawns);
 			tSpawner.SpawnTrafficCar ();
 
-			Debug.Log ("Spawned car");
+			carSpeed += (carSpeed * 0.04f);
+
+			Debug.Log ("Spawned car with speed of " + carSpeed + "\t|\t " + timeBetweenCarSpawns);
 		}
 	}
 }

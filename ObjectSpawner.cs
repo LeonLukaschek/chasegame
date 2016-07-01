@@ -26,6 +26,7 @@ public class ObjectSpawner : MonoBehaviour {
 	//Spawing an amount of random items from a list of prefabs at a positions and rotation
 	public void SpawnObject(List<GameObject> prefabs, int count, Vector3 position, Quaternion rotation ){
 		for (int i = 0; i < count; i++) {
+			//Using float becasue Random.Range with ints excludes the number entered -> if prefabs.Count = 10 max will be 9
 			float rnd = Random.Range (0, prefabs.Count);
 			GameObject spawnedObject = Instantiate (prefabs[(int)rnd].gameObject, position, rotation) as GameObject;
 			//Setting the parent of the new gameobject to holder -> scene is more "clean"
@@ -49,7 +50,20 @@ public class ObjectSpawner : MonoBehaviour {
 			spawnedObject.transform.SetParent (holder);
 		}
 	}
-		
+
+	public GameObject SpawnObject(List<GameObject> prefabs, Vector3 position){
+			int rnd = Random.Range (0, prefabs.Count);
+			GameObject spawnedObject = Instantiate (prefabs[(int)rnd].gameObject, position, prefabs[rnd].transform.rotation) as GameObject;
+			spawnedObject.transform.SetParent (holder);
+
+		return spawnedObject;
+	}
+
+	public GameObject SpawnObject(GameObject prefabs, Vector3 position){
+		GameObject spawnedObject = Instantiate (prefabs.gameObject, position, prefabs.transform.rotation) as GameObject;
+		spawnedObject.transform.SetParent (holder);
+		return spawnedObject;
+	}
 
 	public void SpawnObject(GameObject prefab, int count, Vector3 position, Quaternion rotation){
 		for (int i = 0; i < count; i++) {
@@ -90,7 +104,7 @@ public class ObjectSpawner : MonoBehaviour {
 				xPosMin = 1f;
 				xPos = Random.Range (xPosMin, 7.1f);
 			} else {
-				xPosMin = -2.1f;
+				xPosMin = -2.7f;
 				xPos = Random.Range (xPosMin, -8.9f);
 			}
 			//Random rotation
@@ -112,8 +126,8 @@ public class ObjectSpawner : MonoBehaviour {
 				xPosMin = 0.81f;
 				xPos = Random.Range (xPosMin, 7.1f);
 			} else {
-				xPosMin = -2.27f;
-				xPos = Random.Range (xPosMin, -8.9f);
+				xPosMin = -2.7f;
+				xPos = Random.Range (xPosMin, -9.1f);
 			}
 
 			Vector3 rot = new Vector3(0, Random.Range(0, 360), 0);
@@ -122,27 +136,9 @@ public class ObjectSpawner : MonoBehaviour {
 			SpawnObject (grassPrefs, 1, spawnPos, Quaternion.Euler(rot));
 		}
 	}
-	//Spawning the grass block at the left and right side of the road
-	//spawn changing form left to right side evry time
-	public void SpawnGrassBlock(int count = 2){
-		float xPosL = -2.5f;
-		float xPosR = 4.5f;
-		for (int i = 0; i < count; i++) {
-			if (i % 2 == 0) {
-				Vector3 spawnPosition = new Vector3(xPosL, 0, gManager.GetCurrentZ());
 
-				SpawnObject (grassPrefab, 1, spawnPosition);
-
-				xPosL -= 3.5f;
-			}
-
-			if (i % 2 != 0) {
-				Vector3 spawnPosition = new Vector3(xPosR, 0, gManager.GetCurrentZ());
-
-				SpawnObject (grassPrefab, 1, spawnPosition);
-
-				xPosR += 2.5f;
-			}
-		}
+	public void SpawnGrassBlock(){
+		Vector3 position = new Vector3 (15f, 0f, gManager.GetCurrentZ () + 133f);
+		SpawnObject (grassPrefab, position);
 	}
 }

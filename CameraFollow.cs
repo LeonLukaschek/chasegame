@@ -7,7 +7,7 @@ using System.Collections;
  */ 
 public class CameraFollow : MonoBehaviour {
 	[Header("Camera Follow")]
-	public Transform target;
+	public GameObject player;
 	public float smoothTime = 0.3F;
 	public float xOffset = 0;
 	public float yOffset = 0;
@@ -15,7 +15,9 @@ public class CameraFollow : MonoBehaviour {
 	private Vector3 velocity = Vector3.zero;
 
 	void LateUpdate() {
-		Vector3 targetPosition = new Vector3 (target.position.x + xOffset, target.position.y + yOffset, target.position.z + zOffset);
+		Transform target = player.GetComponentInChildren<Rigidbody> ().transform;
+
+		Vector3 targetPosition = new Vector3 (target.transform.position.x + xOffset, target.position.y + yOffset, target.position.z + zOffset);
 		transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref velocity, smoothTime);
 		//this.transform.rotation = target.gameObject.transform.rotation;
 	}
