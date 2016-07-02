@@ -34,7 +34,11 @@ public class GameManager : MonoBehaviour {
 
 	private int spawnedStreetsCounter = 1;
 	private int treeSpawns = 1, grassSpawns = 1;
+<<<<<<< HEAD
 	private float timeBetweenCarSpawns = 3f;
+=======
+	private float timeBetweenCarSpawns = 3f, spawnGrassZ = 0, lastGrassSpawnZ = 12;
+>>>>>>> origin/master
 
 	// Use this for initialization
 	void Start () {
@@ -68,12 +72,27 @@ public class GameManager : MonoBehaviour {
 			treeSpawns = 0;
 			grassSpawns = 4;
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/master
 			break;
+//		case currentArea.CITY:
+//			treeSpawns = 0;
+//			grassSpawns = 0;
+//
+//
+//			oSpawner.SpawnGrassBlock (highwayGrassBlocks);
+//			break;
 		default:
 			treeSpawns = 0;
 			grassSpawns = 0;
 			Debug.Log ("Default area used");
 			break;
+		}
+
+		if (rcc.shouldSpawnGrass ()) {
+			oSpawner.SpawnGrassBlock ();
 		}
 
 		//Calling the spawn methods form Objectspawner
@@ -104,7 +123,11 @@ public class GameManager : MonoBehaviour {
 
 			carSpeed += (carSpeed * 0.04f);
 
+<<<<<<< HEAD
 			Debug.Log ("Spawned car with speed of " + carSpeed + "\t|Next spawn in " + timeBetweenCarSpawns);
+=======
+			Debug.Log ("Spawned car with speed of " + carSpeed + "\t|\t " + timeBetweenCarSpawns);
+>>>>>>> origin/master
 		}
 	}
 }
