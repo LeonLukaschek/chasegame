@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using System.Collections.Generic;
 
 /*
  * 
@@ -10,9 +11,16 @@ using System.Collections;
 
 public class PlayerController : MonoBehaviour {
 	[Header("Player Settings")]
-	public GameObject car;
-	[Range(0, 20)]
-	public float velocity;
+	public List<GameObject> carsToPick = new List<GameObject>();
+
+	private GameObject car;
+	private float velocity;
+
+	void Start(){
+		car = Instantiate(carsToPick [PlayerPrefs.GetInt ("Selected_Car")], new Vector3(-0.75f, 1.2f, 5f), Quaternion.Euler(0f, 90f, 0f)) as GameObject;
+		velocity = PlayerPrefs.GetFloat ("Speed");
+		car.transform.SetParent (GameObject.FindGameObjectWithTag("Player").transform);
+	}
 
 	void Update () {
 		//Keyboard input

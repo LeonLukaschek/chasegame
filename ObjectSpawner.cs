@@ -14,6 +14,7 @@ public class ObjectSpawner : MonoBehaviour {
 	public List<GameObject> treePrefs = new List<GameObject>();
 	public List<GameObject> roadPrefabs = new List<GameObject>();
 	public GameObject grassPrefab;
+	public GameObject colliderTester;
 	[Space(10)]
 	[Header("Other")]
 	public GameManager gManager;
@@ -92,10 +93,11 @@ public class ObjectSpawner : MonoBehaviour {
 	}
 
 	//Spawning an amount of trees
-	public void SpawnTree(int count = 1){
+	public IEnumerator SpawnTree(int count = 1){
 		for (int i = 0; i < count; i++) {
 			//Getting a random xPos
 			float rnd = Random.Range (0, 10f);
+			bool shoudSpawn = false;
 
 			float xPosMin;
 			float xPos;
@@ -107,12 +109,28 @@ public class ObjectSpawner : MonoBehaviour {
 				xPosMin = -2.7f;
 				xPos = Random.Range (xPosMin, -8.9f);
 			}
+
 			//Random rotation
 			Vector3 rot = new Vector3(0, Random.Range(0, 360), 0);
 			//Spawn position: x =  xPos calculated above, y = 0.5 + Random between -0.2 - 0.2, z = currentZ + Random between -5, 5 
 			Vector3 spawnPos = new Vector3 (xPos, 0.5f + Random.Range (-0.2f, 0.2f), gManager.GetCurrentZ () + Random.Range (-5, 5));
-			SpawnObject (treePrefs, 1, spawnPos, Quaternion.Euler(rot));
+
+			colliderTester.transform.position = spawnPos;
+
+			if (colliderTester.GetComponent<TreeSpawnCollider> ().isColliding()) {
+				shoudSpawn = false;
+			} else if(!colliderTester.GetComponent<TreeSpawnCollider> ().isColliding()){
+				shoudSpawn = true;
+			}
+
+			if (shoudSpawn) {
+				SpawnObject (treePrefs, 1, spawnPos, Quaternion.Euler (rot));
+			} else {
+				i--;
+			}
+			yield return new WaitForSeconds (0.25f);
 		}
+		yield return null;
 	}
 	//Same as spawn tree but with different x values
 	public void SpawnGrass(int count = 1){

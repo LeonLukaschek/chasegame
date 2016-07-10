@@ -7,6 +7,8 @@ public class CarPicker : MonoBehaviour {
 
 	public List<GameObject> carsToPick = new List<GameObject>();
 
+	public CarStatsPanel csp;
+
 	public GameObject currentCarSelected;
 	public Button leftButton;
 	public Button rightButton;
@@ -16,6 +18,11 @@ public class CarPicker : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		currentCarSelected = carsToPick [currentCar].gameObject;
+		csp.UpdateCarInfo ();
+
+		foreach (var g in GameObject.FindGameObjectsWithTag("PlayerCar")) {
+			g.GetComponent<Rigidbody> ().useGravity = false;
+		}
 	}
 	
 	// Update is called once per frame
@@ -41,6 +48,7 @@ public class CarPicker : MonoBehaviour {
 		if (currentCar + 1 != carsToPick.Count) {
 			currentCar++;
 			currentCarSelected = carsToPick [currentCar].gameObject;
+			csp.UpdateCarInfo();
 		} else {
 			
 		}
@@ -50,8 +58,13 @@ public class CarPicker : MonoBehaviour {
 		if (currentCar - 1 != -1) {
 			currentCar--;
 			currentCarSelected = carsToPick [currentCar].gameObject;
+			csp.UpdateCarInfo();
 		} else {
 
 		}
+	}
+
+	public int GetCurrentCarIndex(){
+		return carsToPick.IndexOf (currentCarSelected);
 	}
 }

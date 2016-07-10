@@ -16,6 +16,9 @@ public class GameManager : MonoBehaviour {
 	public float carSpeed = 2;
 	public float timeBetweenCarSpawnsMax = 10f;
 	public float timeBetweenCarSpawnsMin = 3f;
+	public float currentSpawnedTrees = 0;
+	[Range(0, 100)]
+	public float maxTreeSpawns = 0;
 	public List<GameObject> roadPrefabs = new List<GameObject>();
 	[Space(10)]
 	[Header("References to other objects")]
@@ -34,11 +37,9 @@ public class GameManager : MonoBehaviour {
 
 	private int spawnedStreetsCounter = 1;
 	private int treeSpawns = 1, grassSpawns = 1;
-<<<<<<< HEAD
+
 	private float timeBetweenCarSpawns = 3f;
-=======
-	private float timeBetweenCarSpawns = 3f, spawnGrassZ = 0, lastGrassSpawnZ = 12;
->>>>>>> origin/master
+
 
 	// Use this for initialization
 	void Start () {
@@ -53,6 +54,10 @@ public class GameManager : MonoBehaviour {
 		if (rcc.shouldSpawnObjects()) {
 			SpawnManager ();
 		}
+
+		if(Input.GetKeyDown(KeyCode.I)){
+			Debug.Log(PlayerPrefs.GetInt("Selected_Car").ToString());
+		}
 	}
 
 	void SpawnManager(){
@@ -64,18 +69,14 @@ public class GameManager : MonoBehaviour {
 
 			break;
 		case currentArea.FOREST:
-			treeSpawns = 4;
-			grassSpawns = 2;
+			treeSpawns = 3;
+			grassSpawns = 1;
 	
 			break;
 		case currentArea.HIGHWAY:
 			treeSpawns = 0;
 			grassSpawns = 4;
 
-<<<<<<< HEAD
-=======
-
->>>>>>> origin/master
 			break;
 //		case currentArea.CITY:
 //			treeSpawns = 0;
@@ -97,7 +98,9 @@ public class GameManager : MonoBehaviour {
 
 		//Calling the spawn methods form Objectspawner
 		oSpawner.SpawnRoad ();
-		oSpawner.SpawnTree (treeSpawns);
+		if (currentSpawnedTrees <= maxTreeSpawns) {
+			oSpawner.StartCoroutine (oSpawner.SpawnTree (treeSpawns));
+		}
 		oSpawner.SpawnGrass (grassSpawns);
 		timeBetweenCarSpawns = Random.Range (timeBetweenCarSpawnsMin, timeBetweenCarSpawnsMax);
 
@@ -123,11 +126,15 @@ public class GameManager : MonoBehaviour {
 
 			carSpeed += (carSpeed * 0.04f);
 
-<<<<<<< HEAD
+
 			Debug.Log ("Spawned car with speed of " + carSpeed + "\t|Next spawn in " + timeBetweenCarSpawns);
-=======
+
 			Debug.Log ("Spawned car with speed of " + carSpeed + "\t|\t " + timeBetweenCarSpawns);
->>>>>>> origin/master
+
+
+			if (carSpeed >= 10) {
+				carSpeed = Random.Range (2, 5);
+			}
 		}
 	}
 }
