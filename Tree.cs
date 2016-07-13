@@ -6,11 +6,16 @@ public class Tree : MonoBehaviour {
 	private GameManager gManager;
 
 	void Awake(){
-		gManager = GameObject.FindGameObjectWithTag ("GameManager").GetComponent<GameManager>();
-		gManager.currentSpawnedTrees++;
+		if (gManager != null) {
+			
+			gManager = GameObject.FindGameObjectWithTag ("GameManager").GetComponent<GameManager>();
+			gManager.currentSpawnedTrees++;
+		}
 	}
 
 	void OnDestroy(){
-		gManager.currentSpawnedTrees--;
+		if (gManager != null) {
+			gManager.currentSpawnedTrees--;
+		}
 	}
 }
