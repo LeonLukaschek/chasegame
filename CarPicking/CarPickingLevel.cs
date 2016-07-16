@@ -42,7 +42,6 @@ public class CarPickingLevel : MonoBehaviour {
 		}
 
 		for (int i = 0; i < treeCount; i++) {
-			Debug.Log (i);
 			//Getting a random xPos
 			float rnd = Random.Range (0, 10f);
 			bool shoudSpawn = false;
@@ -72,7 +71,6 @@ public class CarPickingLevel : MonoBehaviour {
 			}
 
 			if (shoudSpawn) {
-				Debug.Log ("Spawing tree");
 				GameObject spawnedTree = cpos.SpawnObject (treePrefs, spawnPos, rot) as GameObject;
 				Destroy (spawnedTree.GetComponent<BehindCamEnv> ());
 			} else {

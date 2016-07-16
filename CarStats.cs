@@ -2,13 +2,15 @@
 using System.Collections;
 
 public class CarStats : MonoBehaviour {
-	
-	[Range(0.5f, 10f)]
-	public float speed;
-	[Range(0f, 10f)]
-	public float health;
+	[SerializeField]
+	[Range(0, 10)]
+	private float speed;
+	[SerializeField]
+	[Range(0, 10)]
+	private int health;
+	[SerializeField]
+	private string name;
 
-	public string name;
 
 	/*
 	 *
@@ -24,7 +26,7 @@ public class CarStats : MonoBehaviour {
 		}
 	}
 
-	public float Health {
+	public int Health {
 		get {
 			return this.health;
 		}
@@ -45,7 +47,7 @@ public class CarStats : MonoBehaviour {
 	//Saving the stats so that they can be used in other scenes
 	public void SaveStats(){
 		PlayerPrefs.SetFloat ("Speed", speed);
-		PlayerPrefs.SetFloat ("Lives", health);
+		PlayerPrefs.SetInt ("Health", health);
 		PlayerPrefs.SetString ("Name", name);
 	}
 }
