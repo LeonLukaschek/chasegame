@@ -42,6 +42,7 @@ public class CarStats : MonoBehaviour {
 		}
 	}
 
+	//Saving the stats so that they can be used in other scenes
 	public void SaveStats(){
 		PlayerPrefs.SetFloat ("Speed", speed);
 		PlayerPrefs.SetFloat ("Lives", health);

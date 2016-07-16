@@ -15,6 +15,7 @@ public class TreeSpawnCollider : MonoBehaviour {
 	
 	}
 
+	//Returning if the object is colliding with a tree
 	public bool isColliding(){
 		return b_isColliding;
 	}

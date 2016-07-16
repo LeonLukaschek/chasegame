@@ -119,11 +119,12 @@ public class GameManager : MonoBehaviour {
 		}
 	}
 
+	//Spawning the traffic
 	IEnumerator spawnTraffic(){
 		while(true){
-			yield return new WaitForSeconds (timeBetweenCarSpawns);
 			tSpawner.SpawnTrafficCar ();
 
+			//Adding more speed accordingly to car spawns
 			carSpeed += (carSpeed * 0.04f);
 
 
@@ -131,10 +132,12 @@ public class GameManager : MonoBehaviour {
 
 			Debug.Log ("Spawned car with speed of " + carSpeed + "\t|\t " + timeBetweenCarSpawns);
 
-
+			//Making sure the car speed isnt too high
 			if (carSpeed >= 10) {
 				carSpeed = Random.Range (2, 5);
 			}
+
+			yield return new WaitForSeconds (timeBetweenCarSpawns);
 		}
 	}
 }

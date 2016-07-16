@@ -22,6 +22,7 @@ public class TrafficSpawner : MonoBehaviour {
 
 	public void SpawnTrafficCar(){
 		GameObject spawnedCar = oSpawner.SpawnObject (carPrefabs, new Vector3 (Random.Range(-1.5f,-0.15f), 1.5f, gManager.GetCurrentZ () -3));
+		//Setting the car speed to the one used in GameManager
 		spawnedCar.GetComponent<TrafficCar> ().speed = gManager.carSpeed;
 	}
 }

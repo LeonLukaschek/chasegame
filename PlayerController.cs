@@ -19,6 +19,11 @@ public class PlayerController : MonoBehaviour {
 	void Start(){
 		car = Instantiate(carsToPick [PlayerPrefs.GetInt ("Selected_Car")], new Vector3(-0.75f, 1.2f, 5f), Quaternion.Euler(0f, 90f, 0f)) as GameObject;
 		velocity = PlayerPrefs.GetFloat ("Speed");
+
+		if (velocity == 0) {
+			velocity = 5;
+		}
+			
 		car.transform.SetParent (GameObject.FindGameObjectWithTag("Player").transform);
 	}
 
