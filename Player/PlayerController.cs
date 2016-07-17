@@ -17,19 +17,7 @@ public class PlayerController : MonoBehaviour {
 	private float velocity;
 
 	void Start(){
-		car = Instantiate(carsToPick [PlayerPrefs.GetInt ("Selected_Car")], new Vector3(-0.75f, 1.2f, 5f), Quaternion.Euler(0f, 90f, 0f)) as GameObject;
-		car.AddComponent<PlayerCollision> ();
-		car.AddComponent<PlayerHealth> ();
-
-		Destroy(car.GetComponent<CarStats>());
-
-		velocity = PlayerPrefs.GetFloat ("Speed");
-
-		if (velocity == 0) {
-			velocity = 5;
-		}
-			
-		car.transform.SetParent (GameObject.FindGameObjectWithTag("Player").transform);
+		SetupCar ();
 	}
 
 	void Update () {
@@ -69,7 +57,31 @@ public class PlayerController : MonoBehaviour {
 		if (car.transform.position.x > -0.1f) {
 			car.transform.position = new Vector3 (-0.1f, car.transform.position.y, car.transform.position.z);
 		}
+	}
 
-		car.GetComponent<PlayerHealth> ().healthManager ();
+	void SetupCar(){
+		car = Instantiate(carsToPick [PlayerPrefs.GetInt ("Selected_Car")], new Vector3(-0.75f, 1.2f, 5f), Quaternion.Euler(0f, 90f, 0f)) as GameObject;
+		car.AddComponent<PlayerCollision> ();
+		car.AddComponent<PlayerHealth> ();
+		car.AddComponent<PlayerDead> ();
+
+		Destroy(car.GetComponent<CarStats>());
+
+		velocity = PlayerPrefs.GetFloat ("Speed");
+
+		if (velocity == 0) {
+			velocity = 5;
+		}
+
+		car.transform.SetParent (GameObject.FindGameObjectWithTag("Player").transform);
+	}
+
+	public float Velocity {
+		get {
+			return this.velocity;
+		}
+		set {
+			velocity = value;
+		}
 	}
 }

@@ -19,7 +19,7 @@ public class PlayerCollision : MonoBehaviour {
 	}
 
 	void OnCollisionEnter(Collision other){
-		if (other.gameObject.tag == "Car") {
+		if (other.gameObject.tag == "TrafficCar") {
 			Debug.Log("hit");
 			pHealth.removePlayerHealth ();
 		}

@@ -31,8 +31,6 @@ public class CarPickingLevel : MonoBehaviour {
 
 			yield return new WaitForSeconds (Random.Range(timeBtwSpawnsMin, timeBtwSpawnsMax));
 		}
-
-		yield return null;
 	}
 		
 	public IEnumerator SpawnTree(int count = 1){
@@ -43,19 +41,12 @@ public class CarPickingLevel : MonoBehaviour {
 
 		for (int i = 0; i < treeCount; i++) {
 			//Getting a random xPos
-			float rnd = Random.Range (0, 10f);
 			bool shoudSpawn = false;
 
 			float zPosMin;
 			float zPos;
 
-//			if (rnd >= 5) {
-//				zPosMin = 2f;
-//				zPos = Random.Range (zPosMin, 6f);
-//			} else {
-				zPosMin = 10f;
-				zPos = Random.Range (zPosMin, 45f);
-//			}
+			zPosMin = 10f; zPos = Random.Range (zPosMin, 45f);
 
 			//Random rotation
 			Vector3 rot = new Vector3(0, Random.Range(0, 360), 0);
