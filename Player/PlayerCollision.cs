@@ -10,7 +10,6 @@ public class PlayerCollision : MonoBehaviour {
 	void Start () {
 		player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
 		pHealth = player.transform.GetComponentInChildren<PlayerHealth> ();
-		Debug.Log ("ALDKFJÖ");
 	}
 	
 
@@ -20,7 +19,6 @@ public class PlayerCollision : MonoBehaviour {
 
 	void OnCollisionEnter(Collision other){
 		if (other.gameObject.tag == "TrafficCar") {
-			Debug.Log("hit");
 			pHealth.removePlayerHealth ();
 		}
 	}

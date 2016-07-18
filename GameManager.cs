@@ -92,10 +92,6 @@ public class GameManager : MonoBehaviour {
 			break;
 		}
 
-		if (rcc.shouldSpawnGrass ()) {
-			oSpawner.SpawnGrassBlock ();
-		}
-
 		//Calling the spawn methods form Objectspawner
 		oSpawner.SpawnRoad ();
 		if (currentSpawnedTrees <= maxTreeSpawns) {

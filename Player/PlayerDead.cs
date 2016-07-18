@@ -6,15 +6,13 @@ public class PlayerDead : MonoBehaviour {
 
 
 	PlayerController pc;
-
-	public GameObject scoreboardHolder;
-
+	GameManager gm;
+	ScoreboardManager sm;
 
 	void Start () {
 		pc = GameObject.FindGameObjectWithTag ("Player").GetComponent<PlayerController>();
-		scoreboardHolder = GameObject.FindGameObjectWithTag ("Scoreboard").gameObject;
-
-		scoreboardHolder.gameObject.SetActive (false);
+		gm = GameObject.FindGameObjectWithTag ("GameManager").GetComponent<GameManager>();
+		sm = gm.GetComponent<ScoreboardManager> ();
 	}
 	
 
@@ -23,10 +21,12 @@ public class PlayerDead : MonoBehaviour {
 	}
 
 	public void StopPlayer(){
-		pc.Velocity = 0;
 		StopTrafficCars ();
 
-		scoreboardHolder.gameObject.SetActive (true);
+		pc.Velocity = 0;
+		pc.IsAlive = false;
+
+		sm.ShowScoreboard ();
 	}
 
 	void StopTrafficCars(){
