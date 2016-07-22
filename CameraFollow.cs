@@ -16,7 +16,7 @@ public class CameraFollow : MonoBehaviour {
 
 	void LateUpdate() {
 
-		if (player != null) {
+		if (player) {
 			Transform target = player.GetComponentInChildren<Rigidbody> ().transform;
 			
 			Vector3 targetPosition = new Vector3 (target.transform.position.x + xOffset, target.position.y + yOffset, target.position.z + zOffset);
@@ -24,7 +24,7 @@ public class CameraFollow : MonoBehaviour {
 			//this.transform.rotation = target.gameObject.transform.rotation;
 
 		} else {
-			
+			transform.position = this.transform.position;
 		}
 	}
 

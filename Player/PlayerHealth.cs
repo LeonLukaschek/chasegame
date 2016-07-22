@@ -7,11 +7,14 @@ public class PlayerHealth : MonoBehaviour {
 	private int health;
 
 	private PlayerDead pDead;
+	private bool shoudCheckHP;
 
 	void Start () {
 		pDead = GameObject.FindGameObjectWithTag ("PlayerCar").GetComponent<PlayerDead> ();
 
 		health = PlayerPrefs.GetInt("Health");
+
+		shoudCheckHP = true;
 
 		//Only used in debug because unity does not use playerprefs when debugging
 		if (health == 0) {
@@ -21,7 +24,10 @@ public class PlayerHealth : MonoBehaviour {
 	
 
 	void Update () {
-		healthManager ();
+		if (shoudCheckHP) {
+			healthManager ();
+		}
+
 	}
 
 	public void removePlayerHealth(int decrease = 1){
@@ -31,6 +37,16 @@ public class PlayerHealth : MonoBehaviour {
 	private void healthManager(){
 		if (health <= 0) {
 			pDead.StopPlayer ();
+			shoudCheckHP = false;
+		}
+	}
+
+	public int Health {
+		get {
+			return this.health;
+		}
+		set {
+			health = value;
 		}
 	}
 }

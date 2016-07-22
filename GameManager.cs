@@ -115,7 +115,7 @@ public class GameManager : MonoBehaviour {
 	}
 
 	//Spawning the traffic
-	IEnumerator spawnTraffic(){
+	public IEnumerator spawnTraffic(){
 		while(true){
 			yield return new WaitForSeconds (timeBetweenCarSpawns);
 			tSpawner.SpawnTrafficCar ();

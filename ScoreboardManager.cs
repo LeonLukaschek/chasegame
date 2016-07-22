@@ -5,6 +5,7 @@ using System.Collections;
 public class ScoreboardManager : MonoBehaviour {
 
 	public GameObject scoreboardHolder;
+	public ScoreSystem ss;
 	[Space(5f)]
 	[Header("Text-Object references")]
 	public Text youDroveText;
@@ -17,8 +18,11 @@ public class ScoreboardManager : MonoBehaviour {
 	public Text currentCoinsNumberText;
 	public Text upgradesText;
 
+	private PlayerController player;
+
 	void Start () {
 		scoreboardHolder.SetActive (false);
+		player = GameObject.FindGameObjectWithTag ("Player").GetComponent<PlayerController> ();
 	}
 	
 
@@ -28,19 +32,29 @@ public class ScoreboardManager : MonoBehaviour {
 
 	public void ShowScoreboard(){
 		scoreboardHolder.SetActive (true);
-	
+
 		SetTexts ();
+
+		ss.UpdateCoins (Mathf.RoundToInt (player.Distance) / 10);
 	}
 
 	void SetTexts(){
 		youDroveText.text 			= "YOU DROVE";
-		distanceText.text 			= "DIST_PLACEHOLDER";
-		coinsEarnedText.text 		= "AND EARNED " + "COINS_EARNED_PLACEHOLDER" + " COINS";
-		socialNetworkText.text 		= "CHALLENGE YOUR FRIENDS!";
+		distanceText.text 			= Mathf.RoundToInt(player.Distance) + " m";
+		coinsEarnedText.text 		= "AND EARNED " + (Mathf.RoundToInt(player.Distance) / 10)  + " COINS";
+		socialNetworkText.text 		= "CHALLENGE YOUR FRIENDS ON";
 		newHighscoreText.text 		= "NEW HIGHSCORE";
 		bonusCoinsText.text 		= "AND GET 150 EXTRA COINS!";
 		currentCoinsText.text 		= "CURRENT COINS";
-		currentCoinsNumberText.text = "CURRENT_COINS_PLACEHOLDER";
+		StartCoroutine(UpdateScore());
 		upgradesText.text 			= "BUY UPGRADES";
+	}
+
+	IEnumerator UpdateScore(){
+		for(int i = 0; i < (Mathf.RoundToInt (player.Distance) / 10); i++){
+			currentCoinsNumberText.text = (PlayerPrefs.GetInt ("Score", 0) + i).ToString();
+
+			yield return new WaitForSeconds (0.075f);
+		}
 	}
 }
