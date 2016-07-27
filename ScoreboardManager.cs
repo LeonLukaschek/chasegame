@@ -24,18 +24,12 @@ public class ScoreboardManager : MonoBehaviour {
 		scoreboardHolder.SetActive (false);
 		player = GameObject.FindGameObjectWithTag ("Player").GetComponent<PlayerController> ();
 	}
-	
-
-	void Update () {
-	
-	}
 
 	public void ShowScoreboard(){
 		scoreboardHolder.SetActive (true);
-
-		SetTexts ();
-
+		PlayerPrefs.SetInt ("Score", 1);
 		ss.UpdateCoins (Mathf.RoundToInt (player.Distance) / 10);
+		SetTexts ();
 	}
 
 	void SetTexts(){
@@ -46,15 +40,7 @@ public class ScoreboardManager : MonoBehaviour {
 		newHighscoreText.text 		= "NEW HIGHSCORE";
 		bonusCoinsText.text 		= "AND GET 150 EXTRA COINS!";
 		currentCoinsText.text 		= "CURRENT COINS";
-		StartCoroutine(UpdateScore());
+		currentCoinsNumberText.text = (PlayerPrefs.GetInt ("Score", 0)).ToString();
 		upgradesText.text 			= "BUY UPGRADES";
-	}
-
-	IEnumerator UpdateScore(){
-		for(int i = 0; i < (Mathf.RoundToInt (player.Distance) / 10); i++){
-			currentCoinsNumberText.text = (PlayerPrefs.GetInt ("Score", 0) + i).ToString();
-
-			yield return new WaitForSeconds (0.075f);
-		}
 	}
 }

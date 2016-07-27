@@ -15,7 +15,7 @@ public class CarStatsPanel : MonoBehaviour {
 	public void UpdateCarInfo(){
 		CarStats cs = cars[cPicker.GetCurrentCarIndex()].gameObject.GetComponent<CarStats> ();
 
-		carStatsText.text = cs.Name.ToString () + "\nSpeed: " + cs.Speed.ToString() + "\nLives: " + cs.Health.ToString();
+		carStatsText.text = cs.Name.ToString () + "\nSpeed: " + (cs.Speed * 4).ToString() + " km/h" + "\nLives: " + cs.Health.ToString();
 	}
 
 }
