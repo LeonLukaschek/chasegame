@@ -6,12 +6,14 @@ public class PlayerHealth : MonoBehaviour {
 	[SerializeField]
 	private int health;
 
+	private ManagerUI mUI;
+
 	private PlayerDead pDead;
 	private bool shoudCheckHP;
 
 	void Start () {
 		pDead = GameObject.FindGameObjectWithTag ("PlayerCar").GetComponent<PlayerDead> ();
-
+		mUI = GameObject.FindGameObjectWithTag ("GameManager").GetComponent<ManagerUI> ();
 		health = PlayerPrefs.GetInt("Health");
 
 		shoudCheckHP = true;
@@ -38,6 +40,8 @@ public class PlayerHealth : MonoBehaviour {
 		if (health <= 0) {
 			pDead.StopPlayer ();
 			shoudCheckHP = false;
+			mUI.GameOver = true;
+
 		}
 	}
 

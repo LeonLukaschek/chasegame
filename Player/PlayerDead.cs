@@ -7,12 +7,10 @@ public class PlayerDead : MonoBehaviour {
 
 	PlayerController pc;
 	GameManager gm;
-	ScoreboardManager sm;
 
 	void Start () {
 		pc = GameObject.FindGameObjectWithTag ("Player").GetComponent<PlayerController>();
 		gm = GameObject.FindGameObjectWithTag ("GameManager").GetComponent<GameManager>();
-		sm = gm.GetComponent<ScoreboardManager> ();
 	}
 	
 
@@ -26,7 +24,6 @@ public class PlayerDead : MonoBehaviour {
 		pc.Velocity = 0;
 		pc.IsAlive = false;
 
-		sm.ShowScoreboard ();
 	}
 
 	void StopTrafficCars(){
